@@ -1,0 +1,83 @@
+/* ============================================================
+   variables.css – Tokens de diseño globales de Acme Bank
+
+   Aquí se definen TODAS las variables CSS (también llamadas
+   "design tokens") que se usan en toda la aplicación.
+   Están agrupadas en categorías: colores, tipografía y radios.
+
+   ¿Por qué en un archivo separado?
+   Porque si el banco decide cambiar su color principal o su
+   fuente, solo hay que modificar este archivo y el cambio
+   se refleja automáticamente en toda la aplicación.
+
+   Las fuentes de Google Fonts que se usan:
+     - Manrope: fuente editorial para títulos y menú
+     - Inter: fuente de alta legibilidad para textos y datos
+     - Material Symbols: íconos vectoriales del sistema
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+:root {
+  /* ── Colores primarios ──────────────────────────────────
+     Azul oscuro corporativo del banco.
+     Se usa en títulos, botones, bordes activos y el sidebar. */
+  --primary:                  #00236f;
+  --primary-container:        #1e3a8a;
+
+  /* ── Colores secundarios ────────────────────────────────
+     Azul medio para acentos, enlaces y gradientes de botones. */
+  --secondary:                #0058be;
+  --secondary-container:      #2170e4;
+
+  /* ── Jerarquía de superficies ───────────────────────────
+     Del blanco puro (#fff) al gris más oscuro (#e1e2e4).
+     El diseño usa diferencias de fondo en lugar de bordes
+     para separar las secciones (regla "No-Line"). */
+  --surface:                  #f8f9fb;   /* fondo de página */
+  --surface-container-low:    #f3f4f6;   /* fondo de inputs */
+  --surface-container:        #edeef0;   /* contenedores medios */
+  --surface-container-high:   #e7e8ea;   /* separadores */
+  --surface-container-highest:#e1e2e4;   /* el más oscuro */
+  --surface-container-lowest: #ffffff;   /* tarjetas y paneles */
+  --surface-tint:             #4059aa;   /* tinte azul decorativo */
+
+  /* ── Colores de texto ───────────────────────────────────
+     Se nombran según el fondo sobre el que se usan. */
+  --on-surface:               #191c1e;   /* texto principal (casi negro) */
+  --on-surface-variant:       #444651;   /* texto secundario (gris) */
+  --on-primary:               #ffffff;   /* texto sobre botones azules */
+  --on-primary-container:     #90a8ff;   /* texto sobre contenedor primario */
+
+  /* ── Colores de borde ───────────────────────────────────
+     Solo se usan en casos muy específicos (regla de diseño:
+     preferir diferencia de fondo sobre bordes explícitos). */
+  --outline:                  #757682;
+  --outline-variant:          #c5c5d3;
+
+  /* ── Colores de error y alerta ──────────────────────────
+     Se usan en mensajes de validación y botón "Cerrar sesión". */
+  --error:                    #ba1a1a;
+  --error-container:          #ffdad6;
+
+  /* ── Sombras ────────────────────────────────────────────
+     Siempre con tono azul corporativo, nunca negro puro.
+     Esto mantiene la cohesión visual de la paleta. */
+  --shadow-primary:           rgba(0, 35, 111, 0.08);
+  --shadow-primary-sm:        rgba(0, 35, 111, 0.04);
+
+  /* ── Tipografía ─────────────────────────────────────────
+     Manrope: fuente geométrica moderna para headlines.
+     Inter: fuente legible y neutral para el cuerpo de texto. */
+  --font-headline: 'Manrope', sans-serif;
+  --font-body:     'Inter', sans-serif;
+
+  /* ── Radios de borde ────────────────────────────────────
+     Progresivos: de menor a mayor redondez.
+     Esto le da al diseño su estilo "suave y moderno". */
+  --radius-sm:  0.5rem;   /*  8px – detalles pequeños */
+  --radius-md:  1rem;     /* 16px – campos de formulario */
+  --radius-lg:  2rem;     /* 32px – tarjetas y paneles */
+  --radius-xl:  3rem;     /* 48px – botones y sidebar */
+}

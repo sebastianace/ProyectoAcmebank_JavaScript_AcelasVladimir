@@ -1,0 +1,83 @@
+/* ============================================================
+   responsive.css – Diseño adaptable (Responsive Design)
+
+   Define cómo cambia el layout en diferentes tamaños de pantalla.
+   Se usan dos "puntos de quiebre" (breakpoints):
+
+   960px → Tablet/pantalla mediana:
+     El dashboard pasa de 2 columnas (sidebar + contenido) a
+     1 columna (todo apilado verticalmente).
+     El sidebar sale de su posición sticky y fluye como bloque.
+
+   700px → Móvil/pantalla pequeña:
+     Los formularios de 2 columnas pasan a 1 columna.
+     Las tarjetas del resumen se apilan una sobre otra.
+     Los elementos del certificado se reorganizan verticalmente.
+
+   Estilos de impresión:
+     Oculta el menú, el encabezado y el botón de imprimir para
+     que solo aparezca el contenido relevante en el papel.
+   ============================================================ */
+
+/* ── Tablet (hasta 960px de ancho) ─────────────────────────
+   En esta resolución el sidebar ya no cabe a la izquierda,
+   así que el layout pasa a una sola columna vertical. */
+@media (max-width: 960px) {
+
+  /* El grid pasa de 2 columnas a 1: sidebar arriba, contenido abajo */
+  .dashboard-layout { grid-template-columns: 1fr; }
+
+  /* El sidebar deja de ser sticky y se muestra como bloque normal
+     con margen para separarlo de los bordes de la pantalla */
+  .menu {
+    position: static;
+    height: auto;
+    border-radius: var(--radius-lg);
+    margin: 16px;
+    overflow-y: visible;
+  }
+
+  /* El área de contenido reduce su padding lateral */
+  .content { padding: 16px; }
+}
+
+/* ── Móvil (hasta 700px de ancho) ──────────────────────────
+   En pantallas pequeñas todo se apila verticalmente. */
+@media (max-width: 700px) {
+
+  /* Formulario de registro: pasa de 2 columnas a 1 */
+  .grid-2 { grid-template-columns: 1fr; }
+
+  /* Los dos hipervínculos del login se apilan uno bajo el otro */
+  .auth-links { flex-direction: column; align-items: flex-start; }
+
+  /* La tarjeta de login reduce su padding y radio */
+  .auth-card { padding: 28px 20px; border-radius: var(--radius-lg); }
+
+  /* Las 4 tarjetas del resumen se apilan en 1 columna */
+  .card-grid { grid-template-columns: 1fr; }
+
+  /* Los datos del certificado se apilan verticalmente */
+  .certificate-data-grid { grid-template-columns: 1fr; }
+
+  /* Las firmas del certificado se centran en columna */
+  .certificate-signature { flex-direction: column; gap: 28px; align-items: center; }
+
+  /* El número y la fecha del certificado se apilan */
+  .certificate-ref { flex-direction: column; gap: 12px; }
+
+  /* El encabezado del certificado se apila (logo arriba, badge abajo) */
+  .certificate-header { flex-direction: column; align-items: flex-start; }
+}
+
+/* ── Estilos de impresión ───────────────────────────────────
+   Se activan automáticamente cuando el usuario imprime la página
+   o genera un PDF desde el navegador. */
+@media print {
+  body { background: white; }
+
+  /* Ocultar elementos que no deben aparecer en papel */
+  .menu,
+  .topbar,
+  .certificate-print-btn { display: none !important; }
+}

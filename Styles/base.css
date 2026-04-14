@@ -1,0 +1,84 @@
+/* ============================================================
+   base.css – Reset global y estilos fundamentales
+
+   Este archivo define los estilos más básicos de la aplicación:
+   1. Reset: elimina márgenes, rellenos y box-sizing inconsistentes
+      entre navegadores para que todo se vea igual en Chrome,
+      Firefox, Safari y Edge.
+   2. Estilos del body: fuente base, color de texto y fondo.
+   3. Títulos: todos los h1-h4 usan la fuente Manrope.
+   4. Clases de utilidad usadas desde JavaScript:
+      - .hidden     → oculta elementos del DOM
+      - .error      → mensaje de error rojo debajo de campos
+      - .feedback   → caja de resultado de formulario
+      - .error-text / .success-text → variantes de color
+   ============================================================ */
+
+/* ── Reset universal ────────────────────────────────────────
+   box-sizing: border-box hace que el padding y el borde se
+   incluyan dentro del ancho declarado (comportamiento esperado).
+   margin y padding en 0 eliminan espacios predeterminados. */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Scroll suave al navegar por anclas internas */
+html { scroll-behavior: smooth; }
+
+/* Estilos base del cuerpo de la página */
+body {
+  font-family: var(--font-body);
+  background: var(--surface);
+  color: var(--on-surface);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased; /* fuentes más nítidas en Mac/Retina */
+}
+
+/* Todos los títulos usan Manrope con interletraje ajustado
+   para un look más editorial y profesional */
+h1, h2, h3, h4 {
+  font-family: var(--font-headline);
+  letter-spacing: -0.02em;
+}
+
+/* Ajuste visual de los íconos de Material Symbols */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+/* ── Clases de utilidad (controladas desde JavaScript) ──────
+
+   .hidden: oculta completamente un elemento del DOM.
+   Se aplica/remueve con classList.add/remove desde los archivos JS.
+   El !important asegura que no sea sobreescrito por otros estilos. */
+.hidden { display: none !important; }
+
+/* .error: mensaje de error que aparece debajo de cada campo
+   de formulario cuando la validación detecta un problema.
+   Se llena con texto desde JS usando node.textContent = "mensaje". */
+.error {
+  display: block;
+  min-height: 16px;   /* reserva espacio para no "saltar" el layout */
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 4px;
+}
+
+/* .feedback: caja de resultado general del formulario.
+   Cuando está vacía (feedback:empty) no ocupa espacio.
+   Cuando tiene texto muestra el fondo de color correspondiente. */
+.feedback {
+  min-height: 20px;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  transition: all .2s;
+}
+.feedback:empty { padding: 0; }
+
+/* Variantes semánticas para los mensajes de resultado */
+.error-text   { color: var(--error); background: var(--error-container); }
+.success-text { color: #15803d;      background: #dcfce7; }

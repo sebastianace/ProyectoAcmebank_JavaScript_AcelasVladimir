@@ -1,0 +1,317 @@
+/* ============================================================
+   components.css – Componentes visuales reutilizables
+
+   Contiene los estilos de todos los elementos de UI que se
+   usan dentro del dashboard:
+
+   1. Cuadrícula de tarjetas (.card-grid)
+   2. Tarjeta genérica (.card) y destacada (.wealth-card)
+   3. Panel genérico (.panel) con encabezado y formularios
+   4. Tabla de transacciones con badges de color
+   5. Certificado bancario formal con todas sus secciones
+   ============================================================ */
+
+/* ── 1. Cuadrícula de tarjetas ──────────────────────────────
+   Muestra las 4 tarjetas del resumen de cuenta en 2 columnas:
+   | Número de cuenta  |  Saldo actual  |
+   | Fecha de creación |  Contacto      | */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
+  gap: 16px;
+}
+
+/* ── 2. Tarjeta genérica ────────────────────────────────────
+   Fondo blanco con sombra azulada suave.
+   Sube 2px al pasar el mouse (microinteracción de profundidad). */
+.card {
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow:
+    0 4px 6px -1px var(--shadow-primary-sm),
+    0 20px 25px -5px var(--shadow-primary);
+  transition: transform .2s;
+}
+.card:hover { transform: translateY(-2px); }
+
+/* Etiqueta en mayúsculas pequeñas sobre el valor */
+.card h3 {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+
+/* Valor principal (cuenta, saldo, fecha, correo) */
+.card p {
+  font-family: var(--font-headline);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.35;
+  word-break: break-word;    /* correos largos saltan de línea */
+  overflow-wrap: break-word;
+}
+
+/* ── Tarjeta destacada (Wealth Card) ────────────────────────
+   Fondo degradado azul para destacar el saldo actual.
+   Incluye un efecto de brillo radial decorativo (glassmorphism). */
+.card.wealth-card {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.card.wealth-card::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(144,168,255,.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.card.wealth-card h3 { color: rgba(255,255,255,.7); }
+.card.wealth-card p  { color: var(--on-primary); font-size: 24px; }
+
+/* ── 3. Panel genérico ──────────────────────────────────────
+   Contenedor blanco para las vistas de transacciones,
+   consignación, retiro, servicios y certificado. */
+.panel {
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow:
+    0 4px 6px -1px var(--shadow-primary-sm),
+    0 20px 25px -5px var(--shadow-primary);
+}
+.panel h3 { font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+.panel > p { color: var(--on-surface-variant); font-size: 14px; margin-bottom: 20px; }
+
+/* Encabezado del panel: título a la izquierda, botón a la derecha */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.panel-header button {
+  width: auto !important;
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+  margin-top: 0 !important;
+  border-radius: var(--radius-xl) !important;
+}
+
+/* Formularios dentro de paneles del dashboard */
+.panel form         { max-width: 480px; }
+.panel input,
+.panel select       { background: var(--surface-container-low); }
+.panel form label   { margin-top: 14px; }
+.panel form button[type="submit"] { max-width: 260px; }
+
+/* ── 4. Tabla de transacciones ──────────────────────────────
+   Historial de las últimas 10 operaciones del usuario.
+   La columna TIPO usa badges de color:
+     Verde → Consignación (dinero que entra a la cuenta)
+     Rojo  → Retiro       (dinero que sale de la cuenta) */
+.table-wrap { overflow-x: auto; border-radius: var(--radius-md); }
+table       { width: 100%; border-collapse: collapse; }
+thead       { background: var(--surface-container-low); }
+
+th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 12px 16px;
+  text-align: left;
+  white-space: nowrap;
+}
+td {
+  font-size: 14px;
+  color: var(--on-surface);
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--surface-container-low);
+}
+tr:last-child td { border-bottom: none; }
+
+/* Badge verde: indica ingreso de dinero (Consignación) */
+.badge-consignacion {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px; /* completamente ovalado (pill shape) */
+  font-size: 12px;
+  font-weight: 700;
+  background: #dcfce7; /* verde claro */
+  color: #15803d;      /* verde oscuro */
+}
+
+/* Badge rojo: indica salida de dinero (Retiro o pago de servicio) */
+.badge-retiro {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #ffdad6; /* rojo claro */
+  color: #ba1a1a;      /* rojo oscuro */
+}
+
+/* ── 5. Certificado bancario ────────────────────────────────
+   Documento formal estructurado en 3 capas visuales:
+     A) Encabezado azul: logo, nombre y sello "OFICIAL"
+     B) Cuerpo blanco: número, texto legal, datos y firmas
+     C) Pie gris: dirección y sello de documento oficial */
+
+/* Contenedor externo con sombra y bordes redondeados */
+.certificate-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow:
+    0 4px 6px -1px var(--shadow-primary-sm),
+    0 20px 25px -5px var(--shadow-primary);
+}
+
+/* A) Encabezado azul */
+.certificate-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 28px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.certificate-logo { display: flex; align-items: center; gap: 12px; }
+.certificate-logo img { height: 52px; width: auto; object-fit: contain; }
+.certificate-logo-text strong {
+  display: block;
+  font-family: var(--font-headline);
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+}
+.certificate-logo-text span {
+  font-size: 12px;
+  color: rgba(255,255,255,.8);
+  letter-spacing: .06em;
+}
+.certificate-badge {
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-align: center;
+}
+
+/* B) Cuerpo blanco */
+.certificate-body { background: var(--surface-container-lowest); padding: 36px; }
+
+.certificate-ref {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--surface-container-low);
+}
+.certificate-ref-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.certificate-ref-value {
+  font-family: var(--font-headline);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.certificate-title {
+  font-family: var(--font-headline);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 24px;
+}
+
+.certificate-text {
+  color: var(--on-surface-variant);
+  font-size: 15px;
+  line-height: 1.9;
+  text-align: justify;
+  margin-bottom: 24px;
+}
+
+/* Cuadrícula de datos del titular */
+.certificate-data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 24px 0;
+}
+.certificate-data-item {
+  background: var(--surface-container-low);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+}
+.certificate-data-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 4px;
+}
+.certificate-data-value {
+  font-family: var(--font-headline);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Líneas de firma institucional */
+.certificate-signature {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--surface-container-high);
+}
+.certificate-sig-block  { text-align: center; }
+.certificate-sig-line   { width: 160px; height: 2px; background: var(--primary); margin: 0 auto 8px; }
+.certificate-sig-name   { font-family: var(--font-headline); font-size: 13px; font-weight: 700; color: var(--primary); }
+.certificate-sig-role   { font-size: 11px; color: var(--on-surface-variant); margin-top: 2px; }
+
+/* C) Pie de página gris */
+.certificate-footer {
+  background: var(--surface-container-low);
+  padding: 16px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.certificate-footer-text { font-size: 11px; color: var(--on-surface-variant); }
+.certificate-footer-seal { font-size: 11px; font-weight: 700; color: var(--primary); letter-spacing: .06em; }
+
+/* Botón de imprimir fuera del certificado para que no salga al imprimir */
+.certificate-print-btn {
+  width: auto !important;
+  margin-top: 20px;
+  padding: 12px 28px !important;
+  font-size: 14px !important;
+  border-radius: var(--radius-xl) !important;
+}

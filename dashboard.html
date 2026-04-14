@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acme Bank | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/variables.css">
+  <link rel="stylesheet" href="Styles/base.css">
+  <link rel="stylesheet" href="Styles/auth.css">
+  <link rel="stylesheet" href="Styles/dashboard.css">
+  <link rel="stylesheet" href="Styles/components.css">
+  <link rel="stylesheet" href="Styles/responsive.css">
+  <style>
+    /* Estilos de paneles adicionales */
+    #viewContainer .panel form label { margin-top: 14px; }
+    #viewContainer .panel form button[type="submit"] { max-width: 260px; }
+    #viewContainer .card-grid .card:first-child { grid-column: span 2; }
+    @media (max-width: 600px) {
+      #viewContainer .card-grid .card:first-child { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body class="dashboard-page">
+  <div class="dashboard-layout">
+
+    <!-- ── barra lateral ─────────────────────────────────── -->
+    <aside class="menu">
+      <!-- Brand -->
+      <div class="menu-brand">
+        <img src="media/AB_sin_fondo.jpg" alt="Logo Acme Bank" style="height:40px;width:auto;object-fit:contain">
+        <span class="menu-brand-name">Acme Bank</span>
+      </div>
+
+      <!-- Información del usuario (rellenada por JS a través de welcomeName / accountMeta) -->
+      <div class="menu-user">
+        <p class="menu-user-name" id="welcomeName"></p>
+        <p class="menu-user-meta" id="accountMeta"></p>
+      </div>
+
+      <!-- Navegación -->
+      <nav>
+        <button data-view="overview">
+          <span class="material-symbols-outlined">grid_view</span>
+          Resumen de cuenta
+        </button>
+        <button data-view="transactions">
+          <span class="material-symbols-outlined">receipt_long</span>
+          Historial de transacciones
+        </button>
+        <button data-view="deposit">
+          <span class="material-symbols-outlined">savings</span>
+          Consignación electrónica
+        </button>
+        <button data-view="withdraw">
+          <span class="material-symbols-outlined">payments</span>
+          Retiro de dinero
+        </button>
+        <button data-view="services">
+          <span class="material-symbols-outlined">bolt</span>
+          Pago de servicios públicos
+        </button>
+        <button data-view="certificate">
+          <span class="material-symbols-outlined">workspace_premium</span>
+          Certificado bancario
+        </button>
+      </nav>
+
+      <!-- Botón de cierre de sesión -->
+      <button id="logoutBtn" class="danger">
+        <span class="material-symbols-outlined">logout</span>
+        Cerrar sesión
+      </button>
+    </aside>
+
+    <!-- ── Menu ── -->
+    <main class="content">
+      <header class="topbar">
+        <!-- welcomeName / accountMeta también se muestra aquí en la vista de escritorio. -->
+      </header>
+      <section id="viewContainer"></section>
+    </main>
+
+  </div>
+  <script type="module" src="JS/dashboard.js"></script>
+  <script>
+    // Resaltar el botón de navegación activo
+    document.querySelectorAll('[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-view]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+    // Activar el primer botón al cargar
+    document.addEventListener('DOMContentLoaded', () => {
+      const first = document.querySelector('[data-view="overview"]');
+      if (first) first.classList.add('active');
+    });
+  </script>
+</body>
+</html>

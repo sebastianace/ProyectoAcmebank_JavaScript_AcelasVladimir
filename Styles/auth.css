@@ -1,0 +1,194 @@
+/* ============================================================
+   auth.css – Estilos de las páginas de autenticación
+
+   Aplica a las tres páginas de acceso al sistema:
+     - index.html     (Inicio de sesión)
+     - registro.html  (Crear cuenta)
+     - recuperar.html (Recuperar contraseña)
+
+   Todas comparten la misma estructura visual:
+     Fondo azul degradado + tarjeta blanca centrada + logo arriba
+   ============================================================ */
+
+/* Fondo de toda la página: degradado azul de esquina a esquina */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;  /* flex-start permite scroll en formularios largos */
+  padding: 48px 24px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  position: relative;
+  /* SIN overflow:hidden → el formulario de registro es desplazable en PC */
+}
+
+/* Círculos de luz decorativos en las esquinas del fondo.
+   position:fixed: se quedan en pantalla al hacer scroll
+   y no empujan el contenido hacia abajo. */
+.auth-page::before,
+.auth-page::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none; /* no bloquean clics del usuario */
+  z-index: 0;
+}
+.auth-page::before {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(144,168,255,.15) 0%, transparent 70%);
+  top: -150px; right: -100px;
+}
+.auth-page::after {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(144,168,255,.1) 0%, transparent 70%);
+  bottom: -120px; left: -80px;
+}
+
+/* Envuelve el contenido (logo + tarjeta) y lo centra horizontalmente */
+.auth-shell {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1; /* siempre por encima de los círculos decorativos */
+}
+
+/* Contenedor del logo y nombre del banco sobre la tarjeta */
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.auth-brand img { height: 44px; width: auto; object-fit: contain; }
+.auth-brand-name {
+  font-family: var(--font-headline);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--on-primary); /* blanco sobre fondo azul */
+  letter-spacing: -0.02em;
+}
+
+/* Tarjeta blanca principal donde vive el formulario */
+.auth-card {
+  width: min(480px, 100%); /* máx 480px, 100% en pantallas pequeñas */
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-xl);
+  padding: 36px 40px;
+  box-shadow:
+    0 4px 6px -1px var(--shadow-primary-sm),
+    0 20px 25px -5px var(--shadow-primary);
+}
+
+/* Variante ancha para el formulario de registro (más campos) */
+.auth-card.wide { width: min(860px, 100%); }
+
+.auth-card h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+/* Subtítulo descriptivo debajo del título de la tarjeta */
+.subtitle {
+  color: var(--on-surface-variant);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+/* Todos los formularios: columna única con espacio entre elementos */
+form { display: grid; gap: 6px; }
+
+/* Etiquetas en gris para no competir visualmente con el contenido */
+label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  margin-top: 10px;
+  letter-spacing: 0.01em;
+}
+
+/* Campos de texto y selects: fondo gris sin borde.
+   El diseño usa contraste de fondo en lugar de bordes (No-Line Rule). */
+input, select {
+  width: 100%;
+  background: var(--surface-container-low);
+  border: none;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: 15px;
+  color: var(--on-surface);
+  padding: 13px 16px;
+  outline: none;
+  transition: box-shadow .2s, background .2s;
+}
+
+/* Estado focus: fondo blanco + anillo azul sutil para indicar actividad */
+input:focus, select:focus {
+  background: var(--surface-container-lowest);
+  box-shadow: 0 0 0 2px rgba(0, 88, 190, .2);
+}
+select { cursor: pointer; appearance: auto; }
+
+/* Botón principal: degradado azul oscuro → azul medio a 135°
+   Esquinas muy redondeadas (radius-xl = 48px) para el estilo corporativo. */
+button[type="submit"],
+button.btn-primary {
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px 24px;
+  border: none;
+  border-radius: var(--radius-xl);
+  font-family: var(--font-headline);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--on-primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+  cursor: pointer;
+  transition: filter .2s, transform .1s;
+  box-shadow: 0 4px 14px rgba(0,35,111,.25);
+}
+button[type="submit"]:hover,
+button.btn-primary:hover  { filter: brightness(1.12); }
+button[type="submit"]:active,
+button.btn-primary:active { transform: scale(.98); }
+
+/* Hipervínculos en la parte inferior del formulario */
+.auth-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--surface-container-high);
+}
+.auth-links a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: color .2s;
+}
+.auth-links a:hover { color: var(--primary); }
+
+/* Caja de resumen que aparece después de crear la cuenta */
+.summary {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--surface-container-low);
+  border-radius: var(--radius-lg);
+}
+.summary h3 { color: var(--primary); margin-bottom: 12px; font-size: 16px; }
+.summary p  { color: var(--on-surface-variant); font-size: 14px; margin-bottom: 8px; }
+.summary a  {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--secondary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Cuadrícula de dos columnas para el formulario de registro
+   (nombre | apellido), (ciudad | teléfono), etc. */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }

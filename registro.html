@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acme Bank | Crear cuenta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/variables.css">
+  <link rel="stylesheet" href="Styles/base.css">
+  <link rel="stylesheet" href="Styles/auth.css">
+  <link rel="stylesheet" href="Styles/dashboard.css">
+  <link rel="stylesheet" href="Styles/components.css">
+  <link rel="stylesheet" href="Styles/responsive.css">
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <div>
+      <div class="auth-brand">
+        <img src="media/AB_sin_fondo.jpg" alt="Logo Acme Bank" style="height:44px;width:auto;object-fit:contain">
+        <span class="auth-brand-name">Acme Bank</span>
+      </div>
+
+      <section class="auth-card wide">
+        <h1>Crear cuenta</h1>
+        <p class="subtitle">Todos los campos son obligatorios</p>
+
+        <form id="registerForm" novalidate>
+          <div class="grid-2">
+            <div>
+              <label for="idType">Tipo de identificación</label>
+              <select id="idType" required>
+                <option value="">Selecciona una opción</option>
+                <option value="Cedula de ciudadania">Cédula de ciudadanía</option>
+                <option value="Cedula de extranjeria">Cédula de extranjería</option>
+                <option value="Pasaporte">Pasaporte</option>
+              </select>
+              <small class="error" data-for="idType"></small>
+            </div>
+            <div>
+              <label for="idNumber">Número de identificación</label>
+              <input id="idNumber" type="text" inputmode="numeric" placeholder="Ej: 1234567890" required>
+              <small class="error" data-for="idNumber"></small>
+            </div>
+            <div>
+              <label for="firstName">Nombres</label>
+              <input id="firstName" type="text" placeholder="Juan Pablo" required>
+              <small class="error" data-for="firstName"></small>
+            </div>
+            <div>
+              <label for="lastName">Apellidos</label>
+              <input id="lastName" type="text" placeholder="García López" required>
+              <small class="error" data-for="lastName"></small>
+            </div>
+            <div>
+              <label for="gender">Género</label>
+              <select id="gender" required>
+                <option value="">Selecciona una opción</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="No binario">No binario</option>
+              </select>
+              <small class="error" data-for="gender"></small>
+            </div>
+            <div>
+              <label for="phone">Teléfono</label>
+              <input id="phone" type="text" inputmode="numeric" placeholder="3001234567" required>
+              <small class="error" data-for="phone"></small>
+            </div>
+            <div>
+              <label for="email">Correo electrónico</label>
+              <input id="email" type="email" placeholder="correo@ejemplo.com" required>
+              <small class="error" data-for="email"></small>
+            </div>
+            <div>
+              <label for="city">Ciudad</label>
+              <input id="city" type="text" placeholder="Bogotá" required>
+              <small class="error" data-for="city"></small>
+            </div>
+          </div>
+
+          <label for="address">Dirección</label>
+          <input id="address" type="text" placeholder="Calle 123 # 45-67" required>
+          <small class="error" data-for="address"></small>
+
+          <label for="regPassword">Contraseña <span style="font-weight:400;opacity:.7">(mín. 8 caracteres, 1 mayúscula y 1 número)</span></label>
+          <input id="regPassword" type="password" placeholder="••••••••" required>
+          <small class="error" data-for="regPassword"></small>
+
+          <p id="registerFeedback" class="feedback"></p>
+          <button type="submit">
+            <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:middle">person_add</span>
+            Crear cuenta
+          </button>
+        </form>
+
+        <article id="registerSummary" class="summary hidden"></article>
+
+        <nav class="auth-links">
+          <a href="index.html">
+            <span class="material-symbols-outlined" style="font-size:15px;margin-right:4px;vertical-align:middle">arrow_back</span>
+            Cancelar y volver al inicio de sesión
+          </a>
+        </nav>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="JS/registro.js"></script>
+</body>
+</html>

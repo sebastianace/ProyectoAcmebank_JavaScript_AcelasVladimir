@@ -1,0 +1,144 @@
+/* ============================================================
+   dashboard.css – Layout y menú lateral del Dashboard
+
+   Define la estructura principal del panel de control:
+   - Página completa dividida en dos columnas: sidebar + contenido
+   - Sidebar sticky (se queda fijo al hacer scroll del contenido)
+   - Botones de navegación con estados hover y activo
+   - Área de contenido principal a la derech
+   ============================================================ */
+
+/* Fondo de toda la página del dashboard */
+.dashboard-page {
+  min-height: 100vh;
+  background: var(--surface-container-low);
+}
+
+/* Layout de dos columnas: sidebar fijo a la izquierda + contenido */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr; /* sidebar de 260px, contenido ocupa el resto */
+  min-height: 100vh;
+  align-items: start; /* cada columna crece según su propio contenido */
+}
+
+/* ── Menú lateral (Sidebar) ─────────────────────────────────
+   position:sticky + top:0: el menú se queda visible aunque
+   el usuario haga scroll hacia abajo en el área de contenido.
+   height:100vh + overflow-y:auto: si hay muchos elementos,
+   el menú tiene su propio scroll interno sin recortarse. */
+.menu {
+  background: var(--surface-container-lowest);
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: sticky;
+  top: 0;
+  height: 100vh;    /* ocupa exactamente la altura de la pantalla */
+  overflow-y: auto; /* si el menú es más alto que la pantalla, scrollea */
+  box-shadow: 4px 0 24px var(--shadow-primary-sm);
+  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--outline-variant) transparent;
+}
+
+/* Logo e identidad del banco en la parte superior del sidebar */
+.menu-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 0 6px;
+  flex-shrink: 0; /* nunca se reduce de tamaño */
+}
+.menu-brand img { height: 40px; width: auto; object-fit: contain; }
+.menu-brand-name {
+  font-family: var(--font-headline);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* Chip informativo con nombre y datos del usuario autenticado */
+.menu-user {
+  background: var(--surface-container-low);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  flex-shrink: 0; /* no se comprime aunque haya poco espacio */
+}
+.menu-user-name {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--primary);
+  margin-bottom: 3px;
+}
+.menu-user-meta { font-size: 11px; color: var(--on-surface-variant); }
+
+/* Área de navegación: ocupa el espacio disponible y empuja
+   el botón de "Cerrar sesión" hacia la parte inferior */
+.menu nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Botones del menú de navegación */
+.menu button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-xl);
+  padding: 11px 14px;
+  font-family: var(--font-headline);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  text-align: left;
+  transition: all .2s;
+  margin-top: 0;
+}
+.menu button .material-symbols-outlined { font-size: 19px; flex-shrink: 0; }
+
+/* Hover: fondo gris suave + texto azul + deslizamiento sutil */
+.menu button:hover {
+  background: var(--surface-container-low);
+  color: var(--primary);
+  transform: translateX(3px);
+}
+
+/* Estado activo: resaltado azul muy sutil cuando esa vista está abierta */
+.menu button.active {
+  background: linear-gradient(135deg, rgba(0,35,111,.08), rgba(0,88,190,.05));
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Botón "Cerrar sesión": rojo, siempre al fondo del sidebar */
+.menu button.danger { color: var(--error); margin-top: 6px; flex-shrink: 0; }
+.menu button.danger:hover {
+  background: var(--error-container);
+  color: var(--error);
+  transform: none;
+}
+
+/* ── Área de contenido principal ────────────────────────────
+   Columna derecha donde se renderizan las vistas del dashboard. */
+.content {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0; /* evita desbordamiento horizontal en CSS Grid */
+}
+
+/* Encabezado de bienvenida */
+.topbar h1 { font-size: 26px; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+.topbar p  { color: var(--on-surface-variant); font-size: 14px; }
