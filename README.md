@@ -4,18 +4,6 @@
 
 ---
 
-## 📋 Tabla de contenido
-
-1. [Descripción del proyecto](#descripción-del-proyecto)
-2. [Tecnologías utilizadas](#tecnologías-utilizadas)
-3. [Estructura del proyecto](#estructura-del-proyecto)
-4. [Explicación de cada archivo](#explicación-de-cada-archivo)
-5. [Instrucciones para ejecutar](#instrucciones-para-ejecutar)
-6. [Funcionalidades completadas](#funcionalidades-completadas)
-7. [Diseño y sistema visual](#diseño-y-sistema-visual)
-
----
-
 ## 📌 Descripción del proyecto
 
 Acme Bank es un portal transaccional que funciona completamente en el navegador web, **sin necesidad de un servidor ni base de datos externa**. Toda la información de los usuarios y sus transacciones se almacena de forma persistente en el `localStorage` del navegador usando el formato **JSON**.
