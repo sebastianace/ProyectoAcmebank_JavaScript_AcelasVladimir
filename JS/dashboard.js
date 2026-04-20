@@ -313,19 +313,19 @@ const renderMovementForm = (view) => {
 const renderServices = () => {
   viewContainer.innerHTML = `
     <section class="panel">
-      <h3>Pago de servicios públicos</h3>
+      <h3>Recarga Telefonica</h3>
       <p>Cuenta: <strong>${user.accountNumber}</strong> · ${user.firstName} ${user.lastName}</p>
       <form id="servicesForm">
-        <label for="service">Servicio</label>
+        <label for="service">Compañias</label>
         <select id="service">
-          <option>Energía</option>
-          <option>Agua</option>
-          <option>Gas natural</option>
-          <option>Internet</option>
-        </select>
+            <option>EMovilNet</option>
+            <option>Amber Phone</option>
+            <option>Dynaphone</option>
+            <option>SkyPhone</option>
+          </select>
 
-        <label for="serviceRef">Referencia de factura</label>
-        <input id="serviceRef" type="text" placeholder="Ej: FAC-2024-001" required>
+        <label for="serviceRef">Referencia de telefono</label>
+        <input id="serviceRef" type="text" placeholder="Ej: 3132602321" required>
 
         <label for="serviceAmount">Valor a pagar</label>
         <input id="serviceAmount" type="number" min="1" placeholder="Ej: 120000" required>
@@ -333,7 +333,7 @@ const renderServices = () => {
         <p id="serviceFeedback" class="feedback"></p>
         <button type="submit">
           <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:middle">bolt</span>
-          Pagar servicio
+          Pagar telefono
         </button>
       </form>
     </section>
@@ -369,25 +369,78 @@ const renderServices = () => {
     // Actualizar el saldo visible en el sidebar
     accountMeta.textContent = `Cta. ${user.accountNumber} · ${formatCurrency(user.balance)}`;
 
-    // Generar comprobante de pago para impresión
-    printHTML(
-      "Comprobante de pago de servicio – Acme Bank",
-      `<h1>Comprobante de pago</h1>
-       <p><strong>Titular:</strong> ${user.firstName} ${user.lastName}</p>
-       <p><strong>Cuenta:</strong> ${user.accountNumber}</p>
-       <p><strong>Servicio:</strong> ${service}</p>
-       <p><strong>Referencia factura:</strong> ${ref}</p>
-       <p><strong>Fecha:</strong> ${formatDateTime(tx.date)}</p>
-       <p><strong>Referencia movimiento:</strong> ${tx.reference}</p>
-       <p><strong>Concepto:</strong> ${tx.description}</p>
-       <p><strong>Valor:</strong> ${formatCurrency(tx.value)}</p>
-       <p><strong>Nuevo saldo:</strong> ${formatCurrency(user.balance)}</p>`
-    );
   });
 };
 
 /* ══════════════════════════════════════════════════════════
-   VISTA 5: renderCertificate() – Certificado bancario
+  VISTA 5: renderRecargas() – Recargas Telefonicas
+  permita a los usuarios realizar recargas mediante su numero de telefono.
+   ══════════════════════════════════════════════════════════ */
+
+  const renderRecargas = () => { 
+    viewContainer.innerHTML = `
+      <section class="pane">
+        <h3>Recargas Telefonicas<h3>
+        <p>Cuenta: <strong>${user.accountNumber}</strong> · ${user.firstName} ${user.lastName}</p>
+        <form id="servicesrecar"
+          <label for="service">Servicio</label>
+          <select id="service">
+            <option>EMovilNet</option>
+            <option>Amber Phone</option>
+            <option>Dynaphone</option>
+            <option>SkyPhone</option>
+          </select>
+  
+          <label for="serviceRecarga">Numero Telefonico</label>
+          <input id="serviceRecarga" type="text" placeholder="Ej: 3132602321" required>
+  
+          <label for="serviceAmount">Valor de la recarga required>
+          <input id="serviceAmount" type="number" min="1" placeholder="Ej: 120000" required>
+  
+          <p id="serviceFeedbac" class="feedbac"></p>
+          <button type="submit">
+            <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:middle">bolt</span>
+            Pagar servicio
+          </button>
+        </form>
+      </section>
+    `;
+  
+    document.getElementById("servicesrecar").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const service = document.getElementById("service").value;
+      const amount  = Number(document.getElementById("serviceAmount").value);
+      const ref     = document.getElementById("serviceRecarga").value.trim();
+      const fbNode  = document.getElementById("serviceFeedbac");
+  
+      if (!ref || amount <= 0) return;
+  
+      // Verificar que haya saldo suficiente para cubrir el pago
+      if (amount > user.balance) {
+        fbNode.textContent = "Saldo insuficiente para realizar el pago.";
+        fbNode.className   = "feedback error-text";
+        return;
+      }
+  
+      // Descontar el valor de la recaga del saldo del usuario
+      user.balance -= amount;
+      const tx = addTransaction(
+        "Retiro",
+        `Pago de servicio público ${service}`,
+        amount
+      );
+  
+      fbNode.textContent = "Pago realizado correctamente.";
+      fbNode.className   = "feedback success-text";
+  
+      // Actualizar el saldo visible en el sidebar
+      accountMeta.textContent = `Cta. ${user.accountNumber} · ${formatCurrency(user.balance)}`;
+  
+    });
+  };
+
+/* ══════════════════════════════════════════════════════════
+   VISTA 6: renderCertificate() – Certificado bancario
    Genera un documento formal que certifica que el usuario
    tiene una cuenta activa en Acme Bank.
 
